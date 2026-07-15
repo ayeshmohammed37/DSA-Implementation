@@ -6,24 +6,25 @@ namespace DSA_Implementation.SmartList
 {
     internal class SmartList<T>
     {
-        private T[] data;
-        private int capacity;
-        private int count;
+        private T[] _data;
+        private int _capacity;
+        private int _count;
 
-        public int Count => count;
-        public int Capacity => capacity;
+        public int Capacity { get => _capacity; private set => _capacity = value; }
+        public int Count { get => _count; private set => _count = value; }
+
         public SmartList()
         {
-            this.data = new T[4];
-            this.capacity = 4;
-            this.count = 0;
+            this._data = new T[4];
+            this.Capacity = 4;
+            this.Count = 0;
         }
 
         public SmartList(int capacity)
         {
-            this.capacity = capacity;
-            this.data = new T[capacity];
-            this.count = 0;
+            this.Capacity = capacity;
+            this._data = new T[capacity];
+            this.Count = 0;
         }
 
         public T this[int index]
@@ -32,7 +33,7 @@ namespace DSA_Implementation.SmartList
             { 
                 if (checkIndex(index))
                 {
-                    return data[index];
+                    return _data[index];
                 }
                 else
                 {
@@ -43,7 +44,7 @@ namespace DSA_Implementation.SmartList
             {
                 if (checkIndex(index))
                 {
-                    data[index] = value;
+                    _data[index] = value;
                 }
                 else
                 {
@@ -52,9 +53,27 @@ namespace DSA_Implementation.SmartList
             }
         }
 
+        public void Add(T item)
+        {
+            if (Count == Capacity)
+            {
+                extend();
+            }
+            _data[Count++] = item;
+        }
+
+        private void extend()
+        {
+            Capacity = Capacity * 2;
+            T[] _temp = new T[Capacity];
+            for (int i = 0; i < Count; i++)
+                _temp[i] = _data[i];
+            _data = _temp;
+        }
+
         private bool checkIndex(int idx)
         {
-            if (idx > Count || idx < 0)
+            if (idx >= Count || idx < 0)
             {
                 return false;
             }
