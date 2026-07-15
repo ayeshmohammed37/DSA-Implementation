@@ -23,6 +23,42 @@ namespace DSA_Implementation.SmartList
         {
             this.capacity = capacity;
             this.data = new T[capacity];
+            this.count = 0;
+        }
+
+        public T this[int index]
+        {
+            get 
+            { 
+                if (checkIndex(index))
+                {
+                    return data[index];
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Index out of range");
+                }
+            }
+            set
+            {
+                if (checkIndex(index))
+                {
+                    data[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Index out of range");
+                }
+            }
+        }
+
+        private bool checkIndex(int idx)
+        {
+            if (idx > Count || idx < 0)
+            {
+                return false;
+            }
+            return true;
         }
 
     }
