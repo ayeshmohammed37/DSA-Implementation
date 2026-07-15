@@ -9,5 +9,21 @@ namespace DSA_Implementation.SmartList
         private T[] data;
         private int capacity;
         private int count;
+
+        public int Count => count;
+        public int Capacity => capacity;
+        public SmartList()
+        {
+            this.data = new T[4];
+            this.capacity = 4;
+            this.count = 0;
+        }
+
+        public SmartList(int capacity)
+        {
+            this.capacity = capacity;
+            this.data = new T[capacity];
+        }
+
     }
 }
