@@ -1,0 +1,8 @@
+-(Array of data) data
+- Length
+- get(index)
+- push(item)
+- pop()
+- delete(index)
+-	use shiftItems(index) after deleting item
+- shiftItems(index)
