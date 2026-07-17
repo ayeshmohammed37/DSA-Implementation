@@ -6,59 +6,68 @@ namespace DSA_Implementation.SmartList
 {
     internal class SmartList<T>
     {
-        private T[] data;
-        private int capacity;
-        private int count;
+        private T[] _data;
+        private int _count;
 
-        public int Count => count;
-        public int Capacity => capacity;
+        public int Capacity => _data.Length;
+        public int Count => _count;
+
         public SmartList()
         {
-            this.data = new T[4];
-            this.capacity = 4;
-            this.count = 0;
+            _data = new T[4];
+            _count = 0;
         }
 
         public SmartList(int capacity)
         {
-            this.capacity = capacity;
-            this.data = new T[capacity];
-            this.count = 0;
+            if (capacity <= 0)
+            {
+                throw new Exception("Capacity Can't be zero or negative.");
+            }
+
+            _data = new T[capacity];
+            _count = 0;
         }
 
         public T this[int index]
         {
             get 
-            { 
-                if (checkIndex(index))
-                {
-                    return data[index];
-                }
-                else
+            {
+                if (index >= Count || index < 0)
                 {
                     throw new IndexOutOfRangeException("Index out of range");
                 }
+                
+                return _data[index];
             }
             set
             {
-                if (checkIndex(index))
-                {
-                    data[index] = value;
-                }
-                else
+                if (index >= Count || index < 0)
                 {
                     throw new IndexOutOfRangeException("Index out of range");
                 }
+                
+                _data[index] = value;
             }
         }
 
-        private bool checkIndex(int idx)
+        public void Add(T item)
         {
-            if (idx > Count || idx < 0)
+            if (_count == Capacity)
             {
-                return false;
+                extend();
             }
-            return true;
+            _data[_count++] = item;
+        }
+
+        private void extend()
+        {
+            int newCapacity = Capacity == 0? 4 : Capacity * 2;
+            T[] _temp = new T[Capacity];
+
+            Array.Copy(_data, _temp, _count);
+            
+            _data = _temp;
         }
 
     }
